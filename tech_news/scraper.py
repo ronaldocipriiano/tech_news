@@ -47,8 +47,24 @@ def scrape_next_page_link(html_content):
 
 # Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+    soup = BeautifulSoup(html_content, "html.parser")
+    news = {}
+
+    news["url"] = soup.find("link", rel="canonical")["href"]
+    news["title"] = soup.find("h1", class_="entry-title").text.strip()
+    news["timestamp"] = soup.find("li", class_="meta-date").text.strip()
+    news["writer"] = soup.find("h5", class_="title-author").text.strip()
+    news["reading_time"] = int(
+        soup.find("li", class_="meta-reading-time").text.split()[0].strip()
+    )
+    news["summary"] = soup.find("p").text.strip()
+    news["category"] = (
+        soup.find("a", class_="category-style")
+        .find("span", class_="label")
+        .text.strip()
+    )
+
+    return news
 
 
 # Requisito 5
