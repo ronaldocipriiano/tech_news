@@ -12,7 +12,9 @@ news_mock = [
 
 def test_reading_plan_group_news():
     ReadingPlanService._db_news_proxy = MagicMock(return_value=news_mock)
-    with raises(ValueError, match="Valor 'available_time' deve ser maior que zero"):
+    with raises(
+        ValueError, match="Valor 'available_time' deve ser maior que zero"
+    ):
         ReadingPlanService.group_news_for_available_time(0)
 
     result = ReadingPlanService.group_news_for_available_time(1)
