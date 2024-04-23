@@ -17,9 +17,12 @@ def search_by_title(title):
 # Requisito 8
 def search_by_date(date):
     try:
-        formatted_date = datetime.strptime(date, "%Y-%m-%d").strftime("%d/%m/%Y")
-    except ValueError:
-        raise ValueError("Data inválida")
+        formatted_date = (
+            datetime.strptime(date, "%Y-%m-%d")
+            .strftime("%d/%m/%Y")
+        )
+    except ValueError as exc:
+        raise ValueError("Data inválida") from exc
 
     result = []
 
