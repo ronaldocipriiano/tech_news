@@ -1,4 +1,5 @@
 from time import sleep
+from bs4 import BeautifulSoup
 import requests
 
 
@@ -20,8 +21,17 @@ def fetch(url):
 
 # Requisito 2
 def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+    scrape = BeautifulSoup(html_content, "html.parser")
+    news = scrape.find_all("article", class_="entry-preview")
+    links = []
+
+    for new in news:
+        div = new.find("div", class_="post-inner")
+        link = div.a["href"]
+        links.append(link)
+
+    print("Scraped links:", links)
+    return links
 
 
 # Requisito 3
